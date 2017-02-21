@@ -7,6 +7,7 @@ import org.apache.spark.sql.SparkSession
  */
 object MoviesUtils {
 
+  /* Count the number of movies*/
   def moviesCountByGenre(movies: String, sparkSession: SparkSession): Unit = {
     sparkSession.sql("select * from " + movies).groupBy("genres").count.filter(row => row.apply(0).toString.contains("Mystery|IMAX")).toDF.show
   }

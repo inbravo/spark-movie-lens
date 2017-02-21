@@ -75,3 +75,16 @@ class SparkContextFactory {
     sparkSession.conf.set("spark.ui.port", "4040") //Default 4040
   }
 }
+
+/* Companion object */
+object SparkContextFactory {
+
+  /* Create singleton instance of class */
+  private val factory: SparkContextFactory = new SparkContextFactory
+
+  def getSparkSession(enviornment: String): SparkSession = {
+
+    /* Get spark session*/
+    factory.getSparkSession(enviornment)
+  }
+}

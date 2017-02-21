@@ -2,14 +2,21 @@ package com.inbravo.mr.utils
 
 import org.apache.spark.sql.{ DataFrame, SparkSession }
 
-/* File handling traits */
+/**
+ * 	amit.dixit
+ *  File handling traits
+ */
 trait CustomFileReader { def readAsCSV(fileName: String, sparkSession: SparkSession): DataFrame }
 trait CustomFileWriter {
   def writeAsText(df: DataFrame, location: String, writeSingle: Boolean)
   def writeAsCSV(df: DataFrame, location: String, writeSingle: Boolean)
 }
 
-/* Final objects */
+/**
+ * amit.dixit
+ *
+ * Final objects
+ */
 object FileUtils extends CustomFileReader with CustomFileWriter {
 
   /* Read operation(s) */

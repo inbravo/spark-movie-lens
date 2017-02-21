@@ -17,7 +17,8 @@ object SparkDriver extends ProjectConfig {
     /* To avoid 'winutils.exe' error */
     System.setProperty("hadoop.home.dir", winUtils);
 
-    val sparkSession = new SparkContextFactory().getSparkSession("local")
+    /* Create local spark session */
+    val sparkSession = SparkContextFactory.getSparkSession("local")
 
     /* Read all GroupLens Research data; downloaded in zip format */
     FileUtils.readAsCSV(movies, sparkSession).createOrReplaceTempView("movies")
