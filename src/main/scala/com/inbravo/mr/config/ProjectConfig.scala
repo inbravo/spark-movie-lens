@@ -12,8 +12,8 @@ trait ProjectConfig {
   private val data = config.getConfig("data")
 
   val winUtils = hadoop.getString("winutils")
-  val movies = data.getString("movies.file")
-  val ratings = data.getString("ratings.file")
-  val tags = data.getString("tags.file")
-  val users = data.getString("users.file")
+  val moviesData = data.getString("movies.file")
+  val ratingsData = data.getString("ratings.file")
+  val tagsData = data.getString("tags.file")
+  val usersData = data.getString("users.file")
 }

@@ -1,18 +1,38 @@
 package com.inbravo.mr.utils
 
 import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.DataFrame
 
 /**
  * amit.dixit
  */
 object MoviesUtils {
 
+  val movies = "movies"
+  val genres = "genres"
+
   /* Count the number of movies*/
-  def moviesCountByGenre(movies: String, sparkSession: SparkSession): Unit = {
-    sparkSession.sql("select * from " + movies).groupBy("genres").count.filter(row => row.apply(0).toString.contains("Mystery|IMAX")).toDF.show
+  def movies(sparkSession: SparkSession): Unit = {
+
+    /* Select movies, group by generes, count number of records,  */
+    sparkSession.sql("select * from " + movies).show
   }
 
-  def moviesByGenre(movies: String, sparkSession: SparkSession, genre: String = "Drama|Romance"): Unit = {
-    sparkSession.sql("select genres, title from " + movies).filter(column => column.apply(0).toString.contains(genre)).toDF.show
+  /* Count the number of movies */
+  def moviesCount(sparkSession: SparkSession): Long = {
+
+    /* Select movies, group by generes, count number of records,  */
+    sparkSession.sql("select * from " + movies).count
+  }
+
+  /* Count the number of movies */
+  def moviesCountByGenre(sparkSession: SparkSession, genre: String): Long = {
+
+    /* Select movies, group by generes, count number of records,  */
+    sparkSession.sql("select * from " + movies).groupBy(genres).count.filter(row => row.apply(0).toString.contains(genre)).toDF.count
+  }
+
+  def moviesByGenre(sparkSession: SparkSession, genre: String): DataFrame = {
+    sparkSession.sql("select * from " + movies).filter(column => column.apply(2).toString.contains(genre)).toDF
   }
 }

@@ -21,11 +21,39 @@ object SparkDriver extends ProjectConfig {
     val sparkSession = SparkContextFactory.getSparkSession("local")
 
     /* Read all GroupLens Research data; downloaded in zip format */
-    FileUtils.readAsCSV(movies, sparkSession).createOrReplaceTempView("movies")
+    FileUtils.readAsCSV(moviesData, sparkSession).createOrReplaceTempView(MoviesUtils.movies)
 
-    /* Perform movie operations */
-    MoviesUtils.moviesCountByGenre("movies", sparkSession)
-    MoviesUtils.moviesByGenre("movies", sparkSession, genre = "Fantasy")
-    MoviesUtils.moviesByGenre("movies", sparkSession)
+    /* Count all Mystery movies */
+    println("----------------------------------------------------")
+    println("Count of all movies: " + MoviesUtils.moviesCount(sparkSession))
+
+    /* Count all Mystery movies */
+    println("----------------------------------------------------")
+    println("All movies: ")
+    MoviesUtils.movies(sparkSession)
+
+    /* Count all Mystery movies */
+    println("----------------------------------------------------")
+    println("Count of Mystery movies: " + MoviesUtils.moviesCountByGenre(sparkSession, genre = "Mystery"))
+
+    /* Get all Fantasy movies */
+    println("----------------------------------------------------")
+    println("Fantasy movies: ")
+    MoviesUtils.moviesByGenre(sparkSession, genre = "Fantasy").show
+
+    /* Get all Animation movies */
+    println("----------------------------------------------------")
+    println("Animation movies: ")
+    MoviesUtils.moviesByGenre(sparkSession, genre = "Animation").show
+
+    /* Get all Animation movies */
+    println("----------------------------------------------------")
+    println("Drama movies: ")
+    MoviesUtils.moviesByGenre(sparkSession, genre = "Drama").show
+
+    /* Get all Animation movies */
+    println("----------------------------------------------------")
+    println("War movies: ")
+    MoviesUtils.moviesByGenre(sparkSession, genre = "War").show
   }
 }
