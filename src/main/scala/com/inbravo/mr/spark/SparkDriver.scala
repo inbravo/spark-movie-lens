@@ -8,6 +8,7 @@ import com.inbravo.mr.utils.MoviesUtils
 
 /**
  * amit.dixit
+ *
  * Main executor class
  */
 object SparkDriver extends ProjectConfig {
@@ -23,14 +24,9 @@ object SparkDriver extends ProjectConfig {
     /* Read all GroupLens Research data; downloaded in zip format */
     FileUtils.readAsCSV(moviesData, sparkSession).createOrReplaceTempView(MoviesUtils.movies)
 
-    /* Count all Mystery movies */
+    /* Count all movies */
     println("----------------------------------------------------")
     println("Count of all movies: " + MoviesUtils.moviesCount(sparkSession))
-
-    /* Count all Mystery movies */
-    println("----------------------------------------------------")
-    println("All movies: ")
-    MoviesUtils.movies(sparkSession)
 
     /* Count all Mystery movies */
     println("----------------------------------------------------")
@@ -46,14 +42,24 @@ object SparkDriver extends ProjectConfig {
     println("Animation movies: ")
     MoviesUtils.moviesByGenre(sparkSession, genre = "Animation").show
 
-    /* Get all Animation movies */
+    /* Get all Drama movies */
     println("----------------------------------------------------")
     println("Drama movies: ")
     MoviesUtils.moviesByGenre(sparkSession, genre = "Drama").show
 
-    /* Get all Animation movies */
+    /* Count all War movies */
+    println("----------------------------------------------------")
+    val warMovies = MoviesUtils.moviesByGenre(sparkSession, genre = "War")
+    println("Count of War movies: " + warMovies.count)
+
+    /* Get all War movies */
     println("----------------------------------------------------")
     println("War movies: ")
-    MoviesUtils.moviesByGenre(sparkSession, genre = "War").show
+    warMovies.foreach(movie => println(movie))
+
+    /* Show all movies */
+    println("----------------------------------------------------")
+    println("All movies: ")
+    MoviesUtils.movies(sparkSession).foreach(movie => println(movie))
   }
 }
