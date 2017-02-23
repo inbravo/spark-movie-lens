@@ -15,9 +15,6 @@ object SparkDriver extends ProjectConfig {
 
   def main(args: Array[String]): Unit = {
 
-    /* To avoid 'winutils.exe' error */
-    System.setProperty("hadoop.home.dir", winUtils);
-
     /* Create local spark session */
     val sparkSession = SparkContextFactory.getSparkSession("local")
 
@@ -30,26 +27,26 @@ object SparkDriver extends ProjectConfig {
 
     /* Count all Mystery movies */
     println("----------------------------------------------------")
-    println("Count of Mystery movies: " + MoviesUtils.moviesCountByGenre(sparkSession, genre = "Mystery"))
+    println("Count of Mystery movies: " + MoviesUtils.moviesCountByGenre(sparkSession, genre = MoviesUtils.genereMystery))
 
     /* Get all Fantasy movies */
     println("----------------------------------------------------")
     println("Fantasy movies: ")
-    MoviesUtils.moviesByGenre(sparkSession, genre = "Fantasy").show
+    MoviesUtils.moviesByGenre(sparkSession, genre = MoviesUtils.genereFantasy).show
 
     /* Get all Animation movies */
     println("----------------------------------------------------")
     println("Animation movies: ")
-    MoviesUtils.moviesByGenre(sparkSession, genre = "Animation").show
+    MoviesUtils.moviesByGenre(sparkSession, genre = MoviesUtils.genereAnimation).show
 
     /* Get all Drama movies */
     println("----------------------------------------------------")
     println("Drama movies: ")
-    MoviesUtils.moviesByGenre(sparkSession, genre = "Drama").show
+    MoviesUtils.moviesByGenre(sparkSession, genre = MoviesUtils.genereDrama).show
 
     /* Count all War movies */
     println("----------------------------------------------------")
-    val warMovies = MoviesUtils.moviesByGenre(sparkSession, genre = "War")
+    val warMovies = MoviesUtils.moviesByGenre(sparkSession, genre = MoviesUtils.genereWar)
     println("Count of War movies: " + warMovies.count)
 
     /* Get all War movies */

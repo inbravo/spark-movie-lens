@@ -10,6 +10,14 @@ object MoviesUtils {
 
   val movies = "movies"
   val genres = "genres"
+  val genereFantasy = "Fantasy"
+  val genereAnimation = "Animation"
+  val genereDrama = "Drama"
+  val genereWar = "War"
+  val genereHorror = "Horror"
+  val genereCrime = "Crime"
+  val genereMystery = "Mystery"
+  val genereAdventure = "Adventure"
 
   /* Count the number of movies*/
   def movies(sparkSession: SparkSession): DataFrame = {
