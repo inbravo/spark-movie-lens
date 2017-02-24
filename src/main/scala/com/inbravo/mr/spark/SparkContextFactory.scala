@@ -12,7 +12,7 @@ class SparkContextFactory {
 
     val sparkConfig = prepareSparkConfig(environment)
     var sparkContext: SparkContext = null
-    
+
     if (sparkConfig != null) {
       sparkContext = new SparkContext(sparkConfig)
     }
@@ -57,6 +57,8 @@ class SparkContextFactory {
     sparkSession.sparkContext.setLogLevel("ERROR")
 
     sparkSession.conf.set("spark.app.name", "Movies Recommendation")
+
+    /* Use as many threads as cores */
     sparkSession.conf.set("spark.master", "local")
 
     /* Default 1, used in cluster */

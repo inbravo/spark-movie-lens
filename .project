@@ -1,5 +1,5 @@
 <projectDescription>
-  <name>spark-movie-lens</name>
+  <name>spark-sample-movie-recommendation</name>
   <buildSpec>
     <buildCommand>
       <name>org.scala-ide.sdt.core.scalabuilder</name>
