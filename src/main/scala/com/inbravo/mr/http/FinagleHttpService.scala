@@ -12,7 +12,7 @@ import com.inbravo.mr.config.ProjectConfig
  *
  * Http service to host Movie recommendations
  */
-object HttpService extends ProjectConfig {
+object FinagleHttpService extends ProjectConfig {
 
   /**
    * A simple Filter that catches exceptions and converts them to appropriate

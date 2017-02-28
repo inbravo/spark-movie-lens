@@ -25,6 +25,7 @@ libraryDependencies += "org.apache.hadoop" % "hadoop-yarn-server-resourcemanager
 
 /* Msc for web layer */
 libraryDependencies += "org.apache.curator" % "curator-framework" % "2.7.1"
+libraryDependencies += "org.apache.curator" % "curator-recipes" % "2.7.1"
 libraryDependencies += "javax.activation" % "activation" % "1.1"
 libraryDependencies += "javax.servlet.jsp" % "javax.servlet.jsp-api" % "2.2.1"
 libraryDependencies += "xerces" % "xercesImpl" % "2.9.1"
@@ -32,7 +33,6 @@ libraryDependencies += "com.jcraft" % "jsch" % "0.1.42"
 libraryDependencies += "javax.servlet" % "javax.servlet-api" % "3.0.1"
 libraryDependencies += "com.sun.xml.bind" % "jaxb-impl" % "2.2.3"
 libraryDependencies += "xml-apis" % "xml-apis" % "1.3.04"
-libraryDependencies += "org.apache.curator" % "curator-recipes" % "2.7.1"
 libraryDependencies += "javax.xml.stream" % "stax-api" % "1.0-2"
 libraryDependencies += "asm" % "asm" % "3.1"
 libraryDependencies += "org.hsqldb" % "hsqldb" % "2.0.0"
@@ -54,3 +54,4 @@ libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.7" % "test"
   	
 /* Finagle */
 libraryDependencies += "com.twitter" %% "finagle-http" % "6.42.0"
+libraryDependencies += "com.github.finagle" %% "finch-core" % "0.13.0"
