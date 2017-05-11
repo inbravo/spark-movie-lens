@@ -1,6 +1,8 @@
-# Classical Movies Recommendation Example
+# Various examples of analytics using Apache Spark 
 
-## Initial analytics on the basis of MovieLens data set
-## Spark streaming based sentiment analysis from Twitter and Facebook
-## Docker/Vagrant/Packer based infrastructure setup, on cloud or vm
-## Container orchestration (automated scalability) using Kubernates
+##  MovieLens dataset based Movies Recommendation Example
+### ALS Algorithm Example includes the implementation of Movie Recommendation Engine
+### User will rate movies on the Scale of 0 - 10.
+### Output will be the 50 top movies 
+
+##  Last.FM dataset based Music Recommendation Example
