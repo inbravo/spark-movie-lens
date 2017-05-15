@@ -1,7 +1,7 @@
-# Various examples of analytics using Apache Spark 
+# Apache Spark Analytics Samples
 
-##  [MovieLens](http://movielens.org) dataset based Movies Recommendations
-- This dataset (ml-20m) describes 5-star rating and free-text tagging activity. 
+##  [MOVIELENS](http://movielens.org) DATASET BASED MOVIE RECOMMENDATION EXAMPLE
+- This dataset (ml-20m) describes 5-star rating and free-text tagging activity
 - It contains,
   - Ratings : 20000263  
   - Tags : 465564 
@@ -14,7 +14,5 @@
 	- `movies.csv` 
 	- `ratings.csv` 
 	- `tags.csv`
-- This dataset was generated on March 31, 2015, and updated on October 17, 2016
-- Users were selected at random for inclusion. All selected users had rated at least 20 movies
 
-##  Last.FM dataset based Music Recommendation Example
+##   [LAST.FM](http://last.fm) DATASET BASED MUSIC RECOMMENDATION EXAMPLE
