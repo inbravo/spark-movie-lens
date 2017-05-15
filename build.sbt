@@ -1,4 +1,4 @@
-name := "spark-sample-movie-recommendation"
+name := "spark-examples"
 
 version := "1.0"
 

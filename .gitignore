@@ -3,3 +3,6 @@
 /project/
 
 .cache-main
+*.class
+*.cache
+*.sbt
