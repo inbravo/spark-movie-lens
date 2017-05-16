@@ -1,6 +1,6 @@
 # Apache Spark Analytics Examples  
 
-##  [MOVIELENS](http://movielens.org) DATASET BASED MOVIES RECOMMENDATION EXAMPLE
+##  [MOVIELENS](http://movielens.org) DATASET BASED MOVIES RECOMMENDATION
 - 	Dataset :[ml-20m](http://files.grouplens.org/datasets/movielens/ml-20m.zip)
 - 	It contains,
 	- 	Ratings : 20000263  

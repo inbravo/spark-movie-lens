@@ -1,17 +1,16 @@
-package com.inbravo.mr.spark
+package com.inbravo.mr.driver
 
-import java.util.Date
 import com.inbravo.mr.config.ProjectConfig
 import com.inbravo.mr.utils.FileUtils
-import com.inbravo.mr.utils.DataUtils
-import com.inbravo.mr.utils.MoviesUtils
+import com.inbravo.mr.utils.MovieUtils
+import com.inbravo.mr.spark.SparkContextFactory
 
 /**
  * amit.dixit
  *
  * Main executor class
  */
-object SparkDriver extends ProjectConfig {
+object DataFrameAnalytics extends ProjectConfig {
 
   def main(args: Array[String]): Unit = {
 
@@ -19,34 +18,34 @@ object SparkDriver extends ProjectConfig {
     val sparkSession = SparkContextFactory.getSparkSession("local")
 
     /* Read all GroupLens Research data; downloaded in zip format */
-    FileUtils.readAsCSV(moviesData, sparkSession).createOrReplaceTempView(MoviesUtils.movies)
+    FileUtils.readAsCSV(moviesData_ML_20M, sparkSession).createOrReplaceTempView(MovieUtils.moviesDF)
 
     /* Count all movies */
     println("----------------------------------------------------")
-    println("Count of all movies: " + MoviesUtils.moviesCount(sparkSession))
+    println("Count of all movies: " + MovieUtils.moviesCount(sparkSession))
 
     /* Count all Mystery movies */
     println("----------------------------------------------------")
-    println("Count of Mystery movies: " + MoviesUtils.moviesCountByGenre(sparkSession, genre = MoviesUtils.genereMystery))
+    println("Count of Mystery movies: " + MovieUtils.moviesCountByGenre(sparkSession, genre = MovieUtils.genereMystery))
 
     /* Get all Fantasy movies */
     println("----------------------------------------------------")
     println("Fantasy movies: ")
-    MoviesUtils.moviesByGenre(sparkSession, genre = MoviesUtils.genereFantasy).show
+    MovieUtils.moviesDFByGenre(sparkSession, genre = MovieUtils.genereFantasy).show
 
     /* Get all Animation movies */
     println("----------------------------------------------------")
     println("Animation movies: ")
-    MoviesUtils.moviesByGenre(sparkSession, genre = MoviesUtils.genereAnimation).show
+    MovieUtils.moviesDFByGenre(sparkSession, genre = MovieUtils.genereAnimation).show
 
     /* Get all Drama movies */
     println("----------------------------------------------------")
     println("Drama movies: ")
-    MoviesUtils.moviesByGenre(sparkSession, genre = MoviesUtils.genereDrama).show
+    MovieUtils.moviesDFByGenre(sparkSession, genre = MovieUtils.genereDrama).show
 
     /* Count all War movies */
     println("----------------------------------------------------")
-    val warMovies = MoviesUtils.moviesByGenre(sparkSession, genre = MoviesUtils.genereWar)
+    val warMovies = MovieUtils.moviesDFByGenre(sparkSession, genre = MovieUtils.genereWar)
     println("Count of War movies: " + warMovies.count)
 
     /* Get all War movies */
@@ -57,6 +56,8 @@ object SparkDriver extends ProjectConfig {
     /* Show all movies */
     println("----------------------------------------------------")
     println("All movies: ")
-    MoviesUtils.movies(sparkSession).foreach(movie => println(movie))
+    MovieUtils.moviesDF(sparkSession).foreach(movie => println(movie))
+    
+    MovieUtils.recommendMovies(sparkSession)
   }
 }
