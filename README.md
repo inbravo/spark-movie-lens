@@ -14,7 +14,8 @@
 	- 	movies.csv
 	- 	ratings.csv 
 	-	tags.csv
-- 	Algorithms
+- 	References
+	-	[Spark Hands-on Exercises](https://databricks-training.s3.amazonaws.com/movie-recommendation-with-mllib.html)
 	-	[ALTERNATING LEAST SQUARES (ALS)](https://bugra.github.io/work/notes/2014-04-19/alternating-least-squares-method-for-collaborative-filtering)
 	
 ##  Last.FM dataset based Music Recommendation Example
