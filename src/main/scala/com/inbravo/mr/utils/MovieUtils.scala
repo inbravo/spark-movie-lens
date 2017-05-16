@@ -160,30 +160,44 @@ object MovieUtils extends ProjectConfig {
     /* Get all my unseen movies */
     val moviesIHaveNotSeen = movies.filter { case (movieId, name) => !moviesIHaveSeen.contains(movieId) }.map(_._1)
 
-    /* Predict using ALS model */
-    val predictedRates = model.predict(test.map { case Rating(user, item, rating) => (user, item) }).map {
-      case Rating(user, product, rate) =>
-        ((user, product), rate)
+    /* Predict Rates */
+    val predictedRates = model.predict(test.map {
+
+      /* <User:Item:Rating> => <User:Item> */
+      case Rating(user, item, rating) => (user, item)
+    }).map {
+
+      /* <User:Product:Rate> => <<User:Product>:Rate> */
+      case Rating(user, product, rate) => ((user, product), rate)
     }.persist
 
+    /* Predict Rate Predictions */
     val ratesAndPreds = test.map {
-      case Rating(user, product, rate) =>
-        ((user, product), rate)
+
+      /* <User:Product:Rate> => <<User:Product>:Rate> */
+      case Rating(user, product, rate) => ((user, product), rate)
     }.join(predictedRates)
 
-    val MSE = ratesAndPreds.map { case ((user, product), (r1, r2)) => Math.pow(r1 - r2, 2) }.mean()
+    /* Find Mean Square Erro */
+    val MSE = ratesAndPreds.map { case ((user, product), (r1, r2)) => Math.pow(r1 - r2, 2) }.mean
 
     println("Mean Squared Error = " + MSE)
-    val recommendedMoviesId = model.predict(moviesIHaveNotSeen.map { product =>
-      (0, product)
-    }).map { case Rating(user, movie, rating) => (movie, rating) }
-      .sortBy(x => x._2, ascending = false).take(20).map(x => x._1)
 
-    val recommendMovie = moviesRDD(sparkSession).filter(FileUtils.discardFileHeader).map { str =>
-      val data = str.split(",")
-      (data(0).toInt, data(1))
+    /* Find recommended movies from unseen movies */
+    val recommendedMoviesId = model.predict(moviesIHaveNotSeen.map {
+
+      product => (0, product)
+    }).map {
+      case Rating(user, movie, rating) => (movie, rating)
+    }.sortBy(x => x._2, ascending = false).take(20).map(x => x._1)
+
+    val recommendMovie = moviesRDD(sparkSession).filter(FileUtils.discardFileHeader).map {
+      str =>
+        val data = str.split(",")
+        (data(0).toInt, data(1))
     }.filter { case (id, movie) => recommendedMoviesId.contains(id) }
 
+    /* Print all recommended movies */
     recommendMovie.collect.toList.foreach(println)
   }
 }
