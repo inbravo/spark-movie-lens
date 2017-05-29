@@ -12,7 +12,7 @@ object RDDAnalytics extends ProjectConfig {
 
   def main(args: Array[String]): Unit = {
 
-    /* Count first ten movies */
+    /* Get first ten movies */
     println("----------------------------------------------------")
     println("First Ten Movies: " + MovieUtils.firstTenMoviesRDD(SparkContextFactory.getSparkSession("local")).foreach { x => println(x) })
 
