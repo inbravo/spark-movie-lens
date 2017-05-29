@@ -12,7 +12,12 @@ object RDDAnalytics extends ProjectConfig {
 
   def main(args: Array[String]): Unit = {
 
-    /* Get movie recommendation */
-    MovieUtils.recommendMovies(SparkContextFactory.getSparkSession("local"))
+    /* Count first ten movies */
+    println("----------------------------------------------------")
+    println("First Ten Movies: " + MovieUtils.firstTenMoviesRDD(SparkContextFactory.getSparkSession("local")).foreach { x => println(x) })
+
+    /* All 'action' movies */
+    println("----------------------------------------------------")
+    println("All Action Movies: " + MovieUtils.moviesRDDByGenre(SparkContextFactory.getSparkSession("local"), genre = MovieUtils.genereAction).foreach { x => println(x) })
   }
 }

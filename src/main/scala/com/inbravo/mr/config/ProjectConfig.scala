@@ -15,8 +15,8 @@ trait ProjectConfig {
   val winUtils = hadoop.getString("winutils")
   
   /* Dataset from 'http://files.grouplens.org/datasets/movielens/ml-20m.zip' */
-  val moviesData_ML_20M = data.getString("movies.file")
-  val ratingsData_ML_20M = data.getString("ratings.file")
-  val tagsData_ML_20M = data.getString("tags.file")
-  val usersData_ML_20M = data.getString("users.file")
+  val moviesDataFile = data.getString("movies.file")
+  val ratingsDataFile = data.getString("ratings.file")
+  val tagsDataFile = data.getString("tags.file")
+  val usersDataFile = data.getString("users.file")
 }

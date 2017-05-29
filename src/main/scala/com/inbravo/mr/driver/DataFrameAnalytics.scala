@@ -18,7 +18,7 @@ object DataFrameAnalytics extends ProjectConfig {
     val sparkSession = SparkContextFactory.getSparkSession("local")
 
     /* Read all GroupLens Research data; downloaded in zip format */
-    FileUtils.readAsCSV(moviesData_ML_20M, sparkSession).createOrReplaceTempView(MovieUtils.moviesDF)
+    FileUtils.readAsCSV(moviesDataFile, sparkSession).createOrReplaceTempView(MovieUtils.moviesDF)
 
     /* Count all movies */
     println("----------------------------------------------------")

@@ -5,7 +5,6 @@ import org.apache.spark.SparkContext
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.rdd.RDD
 import java.util.Scanner
-
 import org.apache.spark.mllib.recommendation.{ ALS, MatrixFactorizationModel, Rating }
 import com.inbravo.mr.config.ProjectConfig
 
@@ -19,6 +18,7 @@ object MovieUtils extends ProjectConfig {
   val moviesDF = "movies"
   val genres = "genres"
   val genereFantasy = "Fantasy"
+  val genereAction = "Action"
   val genereAnimation = "Animation"
   val genereDrama = "Drama"
   val genereWar = "War"
@@ -32,7 +32,16 @@ object MovieUtils extends ProjectConfig {
    */
   def moviesRDD(sparkSession: SparkSession): RDD[String] = {
 
-    sparkSession.sparkContext.textFile(moviesData_ML_20M)
+    sparkSession.sparkContext.textFile(moviesDataFile)
+  }
+
+  /**
+   *  Get first ten movies from list
+   */
+  def firstTenMoviesRDD(sparkSession: SparkSession): Array[String] = {
+
+    /* Get top ten movies */
+    sparkSession.sparkContext.textFile(moviesDataFile).filter(FileUtils.fileHeader).collect.take(10)
   }
 
   /**
@@ -72,11 +81,21 @@ object MovieUtils extends ProjectConfig {
   }
 
   /**
+   *  Get RDD of all movies of a perticular genre
+   */
+  def moviesRDDByGenre(sparkSession: SparkSession, genre: String): Array[String] = {
+
+    /* Select movies, filter out unknown genres */
+    sparkSession.sparkContext.textFile(moviesDataFile).filter(column => column.split(",").apply(2).contains(genre)).filter(FileUtils.fileHeader).collect
+  }
+
+  /**
    *  Get Map of all movies <Movie-Id : Movie-Name>
    */
   def moviesMap(sparkSession: SparkSession): Map[Int, String] = {
 
-    moviesRDD(sparkSession).filter(FileUtils.discardFileHeader).map {
+    /* Discard file header before collecting movies as map */
+    moviesRDD(sparkSession).filter(FileUtils.fileHeader).map {
       line =>
         val fields = line.split(",")
         (fields(0).toInt, fields(1))
@@ -123,16 +142,16 @@ object MovieUtils extends ProjectConfig {
   def recommendMovies(sparkSession: SparkSession): Unit = {
 
     /* Load and parse ratings data */
-    val ratingsData = sparkSession.sparkContext.textFile(ratingsData_ML_20M)
+    val ratingsData = sparkSession.sparkContext.textFile(ratingsDataFile)
 
     /* Each record split by comma (,) */
-    val ratings = ratingsData.filter(FileUtils.discardFileHeader).map(_.split(",") match {
+    val ratings = ratingsData.filter(FileUtils.fileHeader).map(_.split(",") match {
 
       /* If data is 4 dimensional array, create spark ml Rating */
       case Array(user, item, rate, timestamp) => Rating(user.toInt, item.toInt, rate.toDouble)
     })
 
-    val movies = moviesRDD(sparkSession).filter(FileUtils.discardFileHeader).map {
+    val movies = moviesRDD(sparkSession).filter(FileUtils.fileHeader).map {
 
       /* Split each movie record by comma (,)*/
       str =>
@@ -191,7 +210,7 @@ object MovieUtils extends ProjectConfig {
       case Rating(user, movie, rating) => (movie, rating)
     }.sortBy(x => x._2, ascending = false).take(20).map(x => x._1)
 
-    val recommendMovie = moviesRDD(sparkSession).filter(FileUtils.discardFileHeader).map {
+    val recommendMovie = moviesRDD(sparkSession).filter(FileUtils.fileHeader).map {
       str =>
         val data = str.split(",")
         (data(0).toInt, data(1))

@@ -27,8 +27,8 @@ object FileUtils extends CustomFileReader with CustomFileWriter with ProjectConf
   override def writeAsCSV(df: DataFrame, location: String, writeSingle: Boolean) = { if (writeSingle) { df.coalesce(1).write.format("com.databricks.spark.csv").option("header", "true").save(location) } }
 
   /* Discard file headers */
-  def discardFileHeader(line: String): Boolean = {
+  def fileHeader(line: String): Boolean = {
 
-    if (line.contains("movieId") | line.contains("userId") | line.contains("rating") | line.contains("timestamp")) false else true
+    if (line.contains("movieId") | line.contains("userId") | line.contains("rating") | line.contains("timestamp") | line.contains("title") | line.contains("genres")) false else true
   }
 }

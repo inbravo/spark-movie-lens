@@ -20,7 +20,7 @@ object MovieRatingUtils extends ProjectConfig {
   def ratingsRDD(sparkSession: SparkSession): RDD[(Long, Rating)] = {
 
     /* Read the ratings file */
-    sparkSession.sparkContext.textFile(ratingsData_ML_20M).filter(FileUtils.discardFileHeader).map {
+    sparkSession.sparkContext.textFile(ratingsDataFile).filter(FileUtils.fileHeader).map {
 
       /* Split the line */
       line =>
