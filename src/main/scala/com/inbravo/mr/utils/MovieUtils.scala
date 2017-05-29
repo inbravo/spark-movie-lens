@@ -105,6 +105,21 @@ object MovieUtils extends ProjectConfig {
   /**
    * Get top 10 movies
    */
+  def topMovies(sparkSession: SparkSession): List[(Int, String)] = {
+
+    /* Get top rated movies */
+    val topRatedMovies = MovieRatingUtils.ratingsRDD(sparkSession).map { rating => rating._2.product }.countByValue.toList.sortBy(-_._2).map { ratingData => ratingData._1 }
+
+    /* Get movie map */
+    val movieMap = moviesMap(sparkSession)
+
+    /* Get top movies after sorting */
+    topRatedMovies.filter(id => movieMap.contains(id)).map { movieId => (movieId, movieMap.getOrElse(movieId, "No Movie Found")) }.sorted
+  }
+
+  /**
+   * Get top 10 movies
+   */
   def topTenMovies(sparkSession: SparkSession): List[(Int, String)] = {
 
     /* Get ratings of movies */
@@ -113,7 +128,7 @@ object MovieUtils extends ProjectConfig {
     /* Get movie map */
     val movieMap = moviesMap(sparkSession)
 
-    /* Get top to movies after sorting */
+    /* Get top movies after sorting */
     top50MovieIds.filter(id => movieMap.contains(id)).map { movieId => (movieId, movieMap.getOrElse(movieId, "No Movie Found")) }.sorted.take(10)
   }
 

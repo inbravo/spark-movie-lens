@@ -19,5 +19,9 @@ object RDDAnalytics extends ProjectConfig {
     /* All 'action' movies */
     println("----------------------------------------------------")
     println("All Action Movies: " + MovieUtils.moviesRDDByGenre(SparkContextFactory.getSparkSession("local"), genre = MovieUtils.genereAction).foreach { x => println(x) })
+
+    /* All top rated movies */
+    println("----------------------------------------------------")
+    println("All Action Movies: " + MovieUtils.topMovies(SparkContextFactory.getSparkSession("local")).foreach { x => println(x) })
   }
 }
