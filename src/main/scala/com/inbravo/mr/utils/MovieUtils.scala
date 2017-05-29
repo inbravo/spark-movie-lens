@@ -103,7 +103,7 @@ object MovieUtils extends ProjectConfig {
   }
 
   /**
-   * Get top 10 movies
+   * Get top rated movies
    */
   def topMovies(sparkSession: SparkSession): List[(Int, String)] = {
 
@@ -132,6 +132,20 @@ object MovieUtils extends ProjectConfig {
     top50MovieIds.filter(id => movieMap.contains(id)).map { movieId => (movieId, movieMap.getOrElse(movieId, "No Movie Found")) }.sorted.take(10)
   }
 
+  /**
+   * TODO : Get top rated movies of 100 users
+   */
+  def topRatedMoviesOf100Users(sparkSession: SparkSession): List[(Int, String)] = {
+
+    /* Get top rated movies */
+    val topRatedMovies = MovieRatingUtils.ratingsRDD(sparkSession).map { rating => rating._2.product }.countByValue.toList.sortBy(-_._2).map { ratingData => ratingData._1 }
+
+    /* Get movie map */
+    val movieMap = moviesMap(sparkSession)
+
+    /* Get top movies after sorting */
+    topRatedMovies.filter(id => movieMap.contains(id)).map { movieId => (movieId, movieMap.getOrElse(movieId, "No Movie Found")) }.sorted
+  }
   /**
    * Get user rating for top 10 movies
    */
@@ -212,7 +226,7 @@ object MovieUtils extends ProjectConfig {
       case Rating(user, product, rate) => ((user, product), rate)
     }.join(predictedRates)
 
-    /* Find Mean Square Erro */
+    /* Find Mean Square Error */
     val MSE = ratesAndPreds.map { case ((user, product), (r1, r2)) => Math.pow(r1 - r2, 2) }.mean
 
     println("Mean Squared Error = " + MSE)
