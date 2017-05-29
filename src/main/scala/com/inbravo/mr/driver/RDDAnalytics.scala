@@ -22,6 +22,6 @@ object RDDAnalytics extends ProjectConfig {
 
     /* All top rated movies */
     println("----------------------------------------------------")
-    println("All Action Movies: " + MovieUtils.topMovies(SparkContextFactory.getSparkSession("local")).foreach { x => println(x) })
+    println("Top Rated Movies: " + MovieUtils.topMovies(SparkContextFactory.getSparkSession("local")).foreach { x => println(x) })
   }
 }
