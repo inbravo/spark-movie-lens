@@ -14,5 +14,6 @@
 - 	References
 	-	[Spark Hands-on Exercises](https://databricks-training.s3.amazonaws.com/movie-recommendation-with-mllib.html)
 	-	[Alternating Least Squares (ALS)](https://bugra.github.io/work/notes/2014-04-19/alternating-least-squares-method-for-collaborative-filtering)
-	
+
+![](https://github.com/inbravo/spark-examples/blob/master/docs/images/lf.png)
 ##  Last.FM dataset based Music Recommendation Example (TODO)
