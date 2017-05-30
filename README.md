@@ -1,5 +1,6 @@
 # Apache Spark Analytics Examples  
 
+![](https://github.com/inbravo/spark-examples/blob/master/docs/images/ml.png)
 ##  [MOVIELENS](http://movielens.org) DATASET BASED MOVIES RECOMMENDATION
 - 	Dataset :[ml-20m](http://files.grouplens.org/datasets/movielens/ml-20m.zip) 
 	- 	Data size (Ratings : 20000263, Tags : 465564, Movies : 27278, Users : 138493) 
